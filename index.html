@@ -816,7 +816,7 @@
 
         // Team data structure
         let teamsData = [];
-        let googleSheetsId = ''; // Will be set by user
+        let googleSheetsId = '1aGLJYQEfh54yUvY6VvyJtbnf8tysTcYtNobDURq34RI'; // ID foglio Google Sheets
         let googleSheetsRange = 'Sheet1!A1:Q14'; // 13 teams + 1 header row
 
         // Initialize teams
@@ -1066,10 +1066,8 @@
 
         // Google Sheets Integration - Using JSONP to avoid CORS
         function loadFromGoogleSheets() {
-            const sheetId = prompt('Inserisci l\'ID del Google Sheet:\n(Puoi trovarlo nell\'URL del foglio)');
-            if (!sheetId) return;
-
-            googleSheetsId = sheetId;
+            // Usa l'ID hardcodato (può essere sovrascritto tramite prompt se necessario)
+            const sheetId = googleSheetsId;
 
             // Setup google.visualization namespace if not exists
             if (!window.google) {
@@ -1186,10 +1184,9 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             if (!loadData()) {
-                initializeTeams();
-                generateTable();
-                generateMobileCards();
-                calculateScores();
+                // Se non ci sono dati locali, carica da Google Sheets automaticamente
+                console.log('📊 Caricamento automatico da Google Sheets...');
+                loadFromGoogleSheets();
             }
 
             console.log('%c🏺 CLASSIFICA OLIMPICA CARICATA',
