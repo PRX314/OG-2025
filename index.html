@@ -816,12 +816,12 @@
         // Team data structure
         let teamsData = [];
         let googleSheetsId = ''; // Will be set by user
-        let googleSheetsRange = 'Sheet1!A1:Q21'; // Adjust as needed
+        let googleSheetsRange = 'Sheet1!A1:Q14'; // 13 teams + 1 header row
 
         // Initialize teams
         function initializeTeams() {
             teamsData = [];
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= 13; i++) {
                 teamsData.push({
                     name: `Squadra ${i}`,
                     scores: {
@@ -1126,7 +1126,7 @@
             // Assuming first row is header, starting from row 1 (index 0)
             teamsData = [];
 
-            for (let i = 0; i < rows.length && i < 20; i++) {
+            for (let i = 0; i < rows.length && i < 13; i++) {
                 const row = rows[i];
                 if (!row.c || !row.c[0]) continue;
 
