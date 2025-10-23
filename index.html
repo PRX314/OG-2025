@@ -1065,7 +1065,7 @@
         }
 
         // Google Sheets Integration - Using JSONP to avoid CORS
-        function loadFromGoogleSheets() {
+        function loadFromGoogleSheets(showAlert = true) {
             // Usa l'ID hardcodato (può essere sovrascritto tramite prompt se necessario)
             const sheetId = googleSheetsId;
 
@@ -1087,13 +1087,18 @@
                         parseGoogleSheetsData(response.table.rows);
                         document.getElementById('sheetsInfo').style.display = 'block';
                         document.getElementById('lastUpdate').textContent = new Date().toLocaleString('it-IT');
-                        alert('✅ Dati caricati da Google Sheets!\n\n' + response.table.rows.length + ' squadre importate!');
+                        console.log('✅ Dati caricati da Google Sheets:', response.table.rows.length, 'squadre');
+                        if (showAlert) {
+                            alert('✅ Dati caricati da Google Sheets!\n\n' + response.table.rows.length + ' squadre importate!');
+                        }
                     } else {
                         throw new Error('Formato dati non valido');
                     }
                 } catch (error) {
                     console.error('Errore Google Sheets:', error);
-                    alert('❌ Errore nel caricamento da Google Sheets.\n\nDettaglio: ' + error.message + '\n\nAssicurati che:\n1. Il foglio sia pubblico\n2. L\'ID sia corretto\n3. Il formato sia: SQUADRA | CALIGO | CASA GOTUZZO | ... | BONUS');
+                    if (showAlert) {
+                        alert('❌ Errore nel caricamento da Google Sheets.\n\nDettaglio: ' + error.message + '\n\nAssicurati che:\n1. Il foglio sia pubblico\n2. L\'ID sia corretto\n3. Il formato sia: SQUADRA | CALIGO | CASA GOTUZZO | ... | BONUS');
+                    }
                 } finally {
                     // Cleanup: remove script tag
                     const scriptTag = document.getElementById('googlesheet-script');
@@ -1183,11 +1188,9 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            if (!loadData()) {
-                // Se non ci sono dati locali, carica da Google Sheets automaticamente
-                console.log('📊 Caricamento automatico da Google Sheets...');
-                loadFromGoogleSheets();
-            }
+            // SEMPRE carica da Google Sheets per avere dati aggiornati (silenzioso)
+            console.log('📊 Caricamento automatico da Google Sheets...');
+            loadFromGoogleSheets(false); // false = nessun alert popup
 
             console.log('%c🏺 CLASSIFICA OLIMPICA CARICATA',
                 'color: #daa520; font-size: 16px; font-weight: bold;');
