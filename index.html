@@ -31,28 +31,34 @@
         .scoreboard-header::before {
             content: '';
             position: absolute;
-            top: -35px;
+            top: -45px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: url('Loghi Bar/Logo olimpiadi goliardiche.png') center/contain no-repeat;
             background-color: white;
             border-radius: 50%;
             box-shadow: 0 4px 12px rgba(184, 134, 11, 0.4);
-            padding: 5px;
+            padding: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .scoreboard-header::before:hover {
+            transform: translateX(-50%) scale(1.05);
         }
 
         .scoreboard-title {
             font-family: 'Cinzel', serif;
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: 600;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             background: linear-gradient(45deg, #b8860b, #daa520, #ffd700);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
@@ -519,19 +525,19 @@
             }
 
             .scoreboard-header::before {
-                width: 50px;
-                height: 50px;
-                top: -25px;
+                width: 70px;
+                height: 70px;
+                top: -35px;
             }
 
             .scoreboard-title {
-                font-size: 1.6em;
-                letter-spacing: 2px;
+                font-size: 1.4em;
+                letter-spacing: 1.5px;
                 margin-bottom: 5px;
             }
 
             .scoreboard-subtitle {
-                font-size: 0.85em;
+                font-size: 0.8em;
                 margin-top: 5px;
             }
 
@@ -678,22 +684,20 @@
         <div class="scoreboard-header">
             <div class="scoreboard-title">🏆 CLASSIFICA FINALE 🏆</div>
             <div class="scoreboard-subtitle">Olimpiadi Goliardiche 2025 - La Gloria Eterna</div>
-            <div style="margin-top: 20px; color: #888; font-style: italic;">
-                <span class="olympic-flame">🔥</span> 14 Bar Olimpici • 13 Squadre Leggendarie <span class="olympic-flame">🔥</span>
+            <div style="margin-top: 12px; color: #888; font-style: italic; font-size: 0.95em;">
+                14 Bar Olimpici • 13 Squadre Leggendarie
             </div>
         </div>
 
         <!-- Google Sheets Info -->
         <div class="google-sheets-info" id="sheetsInfo" style="display: none;">
-            <div class="sheets-status" id="sheetsStatus">📊 Connesso a Google Sheets</div>
-            <div style="margin-top: 5px; font-size: 0.85em;">Ultimo aggiornamento: <span id="lastUpdate">-</span></div>
+            <div style="font-size: 0.9em; font-weight: 600;">📊 Ultimo aggiornamento: <span id="lastUpdate">-</span></div>
         </div>
 
         <!-- Navigation -->
         <div class="nav-buttons">
             <a href="hub-capitani.html" class="nav-btn">👑 Hub Capitani</a>
             <a href="homepage.html" class="nav-btn">🏛️ Home Olimpiadi</a>
-            <button class="nav-btn" onclick="loadFromGoogleSheets()">🔄 Sincronizza Google Sheets</button>
             <button class="nav-btn" onclick="calculateScores()">⚡ Ricalcola</button>
             <button class="nav-btn" onclick="exportData()">💾 Esporta</button>
         </div>
@@ -1186,16 +1190,89 @@
             alert('📊 Dati esportati con successo!');
         }
 
+        // Long press sul logo per sincronizzare
+        let longPressTimer = null;
+        let longPressProgress = null;
+
+        function initLogoLongPress() {
+            const header = document.querySelector('.scoreboard-header');
+
+            const startPress = (e) => {
+                // Crea indicatore visivo
+                longPressProgress = document.createElement('div');
+                longPressProgress.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(218, 165, 32, 0.95);
+                    color: white;
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 1.1em;
+                    font-weight: 600;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                    z-index: 10000;
+                    text-align: center;
+                `;
+                longPressProgress.textContent = '🔄 Tieni premuto per sincronizzare...';
+                document.body.appendChild(longPressProgress);
+
+                longPressTimer = setTimeout(() => {
+                    // Dopo 3 secondi, sincronizza
+                    longPressProgress.textContent = '✅ Sincronizzazione...';
+                    loadFromGoogleSheets(true);
+
+                    setTimeout(() => {
+                        if (longPressProgress && longPressProgress.parentNode) {
+                            longPressProgress.remove();
+                        }
+                        longPressProgress = null;
+                    }, 1500);
+                }, 3000);
+            };
+
+            const endPress = () => {
+                if (longPressTimer) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                }
+                if (longPressProgress && longPressProgress.parentNode) {
+                    longPressProgress.remove();
+                    longPressProgress = null;
+                }
+            };
+
+            // Eventi mouse
+            header.addEventListener('mousedown', startPress);
+            header.addEventListener('mouseup', endPress);
+            header.addEventListener('mouseleave', endPress);
+
+            // Eventi touch per mobile
+            header.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                startPress(e);
+            });
+            header.addEventListener('touchend', endPress);
+            header.addEventListener('touchcancel', endPress);
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             // SEMPRE carica da Google Sheets per avere dati aggiornati (silenzioso)
             console.log('📊 Caricamento automatico da Google Sheets...');
             loadFromGoogleSheets(false); // false = nessun alert popup
 
+            // Inizializza long press sul logo
+            initLogoLongPress();
+
             console.log('%c🏺 CLASSIFICA OLIMPICA CARICATA',
                 'color: #daa520; font-size: 16px; font-weight: bold;');
             console.log('%cVista mobile con cards e filtri per bar attivata!',
                 'color: #666; font-size: 12px;');
+            console.log('%c💡 TIP: Tieni premuto il logo per 3 secondi per sincronizzare!',
+                'color: #daa520; font-size: 12px;');
         });
     </script>
 </body>
