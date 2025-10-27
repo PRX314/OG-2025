@@ -96,7 +96,7 @@ Each temple has one challenge, and teams earn points (0-100) for completing chal
 The scoreboard (`index.html`) integrates with Google Sheets using **JSONP technique** to avoid CORS issues:
 
 1. **Automatic loading on startup** - The app ALWAYS loads from Google Sheets silently when the page loads (no user prompt)
-2. **Hardcoded Sheet ID** - Currently set to: `1aGLJYQEfh54yUvY6VvyJtbnf8tysTcYtNobDURq34RI` (in `index.html:832`)
+2. **Hardcoded Sheet ID** - Currently set to: `1aGLJYQEfh54yUvY6VvyJtbnf8tysTcYtNobDURq34RI` (in `index.html:664`)
 3. **Manual sync via long-press** - Hold logo for 5 seconds to trigger a manual sync with visual feedback
 4. App creates script tag: `https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:json`
 5. Google Sheets calls `window.google.visualization.Query.setResponse()`
@@ -241,7 +241,7 @@ Esc         // Close modals
 - Check that Sheet ID (from URL) is correct
 - Ensure internet connection is active
 - Check browser console for JSONP errors
-- **To change the Google Sheets ID**: Edit `index.html` line 832 and update the `googleSheetsId` variable
+- **To change the Google Sheets ID**: Edit `index.html` line 664 and update the `googleSheetsId` variable
   ```javascript
   let googleSheetsId = 'YOUR_NEW_SHEET_ID_HERE';
   ```
