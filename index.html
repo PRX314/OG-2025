@@ -267,132 +267,101 @@
             box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
         }
 
-        /* Mobile View Styles */
-        .mobile-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .mobile-tab {
-            flex: 1;
-            padding: 12px;
-            background: #f5f5f5;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-tab.active {
-            background: linear-gradient(135deg, #daa520, #ffd700);
-            color: white;
-            border-color: #b8860b;
-        }
-
-        .mobile-search {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #daa520;
-            border-radius: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1em;
-        }
-
-        .bar-selector {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #daa520;
-            border-radius: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1em;
-            background: white;
-        }
+        /* Mobile View Styles - Simplified */
 
         /* Team Cards */
         .team-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 8px;
         }
 
         .team-card {
-            background: white;
-            padding: 15px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-left: 4px solid #daa520;
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #daa520, #ffd700, #daa520);
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
         }
 
         .team-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
+            box-shadow: 0 8px 20px rgba(218, 165, 32, 0.12);
+            background: linear-gradient(145deg, #ffffff 0%, #fffef8 100%);
+        }
+
+        .team-card:hover::before {
+            opacity: 0.8;
         }
 
         .team-card-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
+            gap: 6px;
+            margin-bottom: 8px;
         }
 
         .team-card-rank {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #daa520;
-            font-family: 'Cinzel', serif;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: #aaa;
+            font-family: 'JetBrains Mono', monospace;
+            flex-shrink: 0;
         }
 
         .team-card-name {
-            font-size: 1em;
+            font-size: 0.9em;
             font-weight: 600;
             color: #2c3e50;
             font-family: 'Cinzel', serif;
             text-align: center;
             line-height: 1.2;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .team-card-total {
-            font-size: 1.8em;
+            font-size: 1.1em;
             font-weight: bold;
             color: #b8860b;
             font-family: 'JetBrains Mono', monospace;
+            flex-shrink: 0;
         }
 
         .team-card-scores {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 6px;
-            margin-top: 10px;
+            gap: 4px;
+            margin-top: 6px;
         }
 
         .score-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 8px;
+            padding: 4px 6px;
             background: #f8f9fa;
+            border: none;
             border-radius: 5px;
-            font-size: 0.75em;
+            font-size: 0.7em;
         }
 
         .score-item-name {
@@ -409,83 +378,26 @@
 
         .expand-btn {
             width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-            background: #f0f0f0;
+            padding: 5px;
+            margin-top: 6px;
+            background: #f5f5f5;
             border: none;
             border-radius: 6px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8em;
+            font-size: 0.7em;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #666;
         }
 
         .expand-btn:hover {
-            background: #daa520;
+            background: linear-gradient(135deg, #daa520, #ffd700);
             color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(218, 165, 32, 0.25);
         }
 
-        /* Bar View */
-        .bar-view-container {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .bar-view-header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #daa520;
-        }
-
-        .bar-view-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5em;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .bar-scores-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .bar-score-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 3px solid #daa520;
-        }
-
-        .bar-score-item:hover {
-            background: #fff8dc;
-        }
-
-        .bar-team-rank {
-            font-weight: bold;
-            color: #daa520;
-            margin-right: 10px;
-            min-width: 30px;
-        }
-
-        .bar-team-name {
-            flex: 1;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .bar-team-score {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #b8860b;
-            font-family: 'JetBrains Mono', monospace;
-        }
 
         .google-sheets-info {
             background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
@@ -594,68 +506,43 @@
                 margin-top: 3px;
             }
 
-            /* Mobile tabs */
-            .mobile-tabs {
-                padding: 10px;
-                gap: 8px;
-                margin-bottom: 12px;
-            }
 
-            .mobile-tab {
-                padding: 8px;
-                font-size: 0.85em;
-            }
-
-            /* Mobile search */
-            .mobile-search {
-                padding: 12px;
-                margin-bottom: 12px;
-            }
-
-            .search-input,
-            .bar-selector {
-                padding: 10px;
-                font-size: 0.9em;
-            }
-
-            /* Team cards - mantieni due colonne su mobile */
+            /* Team cards - compatto per mobile */
             .team-cards {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                gap: 6px;
             }
 
             .team-card {
-                padding: 10px;
+                padding: 8px;
                 margin-bottom: 0;
             }
 
             .team-card-header {
-                margin-bottom: 8px;
-                padding-bottom: 6px;
-                gap: 5px;
+                margin-bottom: 6px;
+                gap: 4px;
             }
 
             .team-card-rank {
-                font-size: 1.5em;
+                font-size: 0.7em;
             }
 
             .team-card-name {
-                font-size: 0.85em;
+                font-size: 0.8em;
             }
 
             .team-card-total {
-                font-size: 1.5em;
+                font-size: 1em;
             }
 
             .team-card-scores {
-                grid-template-columns: 1fr;
-                gap: 5px;
-                margin-top: 8px;
+                gap: 3px;
+                margin-top: 5px;
             }
 
             .score-item {
-                padding: 5px 6px;
-                font-size: 0.7em;
+                padding: 3px 5px;
+                font-size: 0.65em;
             }
 
             .score-item-name {
@@ -663,33 +550,11 @@
             }
 
             .expand-btn {
-                padding: 6px;
-                margin-top: 6px;
-                font-size: 0.75em;
+                padding: 4px;
+                margin-top: 5px;
+                font-size: 0.65em;
             }
 
-            /* Bar view */
-            .bar-view-container {
-                padding: 12px;
-            }
-
-            .bar-view-header {
-                margin-bottom: 12px;
-                padding-bottom: 10px;
-            }
-
-            .bar-view-title {
-                font-size: 1.2em;
-                margin-bottom: 5px;
-            }
-
-            .bar-scores-list {
-                gap: 8px;
-            }
-
-            .bar-score-item {
-                padding: 10px;
-            }
         }
     </style>
 </head>
@@ -699,7 +564,7 @@
         <div class="scoreboard-header">
             <div class="olympic-logo-sync"></div>
             <div class="header-content">
-                <div class="scoreboard-title">🏆 CLASSIFICA<br>FINALE 🏆</div>
+                <div class="scoreboard-title">🏆 CLASSIFICA 🏆</div>
                 <div class="scoreboard-subtitle">Olimpiadi Goliardiche 2025 - La Gloria Eterna</div>
                 <div style="margin-top: 8px; color: #888; font-style: italic; font-size: 0.9em;">
                     14 Bar Olimpici • 13 Squadre Leggendarie
@@ -768,50 +633,9 @@
             </div>
         </div>
 
-        <!-- MOBILE VIEW - Cards & Bar View -->
+        <!-- MOBILE VIEW - Two Column Cards -->
         <div class="mobile-view">
-            <!-- Mobile Tabs -->
-            <div class="mobile-tabs">
-                <div class="mobile-tab active" onclick="switchMobileView('classifica')">
-                    🏆 Classifica
-                </div>
-                <div class="mobile-tab" onclick="switchMobileView('bar')">
-                    🏛️ Per Bar
-                </div>
-            </div>
-
-            <!-- Classifica View -->
-            <div id="mobile-classifica-view">
-                <div class="mobile-search">
-                    <input type="text" class="search-input" id="searchTeam" placeholder="🔍 Cerca squadra..." onkeyup="filterTeams()">
-                </div>
-                <div class="team-cards" id="teamCards"></div>
-            </div>
-
-            <!-- Bar View -->
-            <div id="mobile-bar-view" style="display: none;">
-                <div class="mobile-search">
-                    <select class="bar-selector" id="barSelector" onchange="showBarScores()">
-                        <option value="">🏛️ Seleziona un Tempio...</option>
-                        <option value="caligo">CALIGO</option>
-                        <option value="casaGotuzzo">CASA GOTUZZO</option>
-                        <option value="cereria">CERERIA</option>
-                        <option value="circoloSport">CIRCOLO SPORT</option>
-                        <option value="excalibur">EXCALIBUR</option>
-                        <option value="leFontane">LE FONTANE</option>
-                        <option value="loomi">LOOMI</option>
-                        <option value="maryJo">MARY JO</option>
-                        <option value="storico">STORICO</option>
-                        <option value="teleria108">TELERIA 108</option>
-                        <option value="tirebouchon">TIREBOUCHON</option>
-                        <option value="vinoria">VINORIA</option>
-                        <option value="vinoteca">VINOTECA</option>
-                        <option value="vitae">VITAE</option>
-                        <option value="bonus">BONUS</option>
-                    </select>
-                </div>
-                <div class="bar-view-container" id="barViewContainer"></div>
-            </div>
+            <div class="team-cards" id="teamCards"></div>
         </div>
     </div>
 
@@ -911,7 +735,6 @@
             teamsData.forEach((team, index) => {
                 const card = document.createElement('div');
                 card.className = 'team-card';
-                card.dataset.teamName = team.name.toLowerCase();
 
                 const scoresHtml = Object.entries(team.scores).map(([key, value]) => {
                     if (value === 0) return '';
@@ -933,7 +756,7 @@
                         ${scoresHtml || '<div style="text-align: center; color: #999;">Nessun punteggio</div>'}
                     </div>
                     <button class="expand-btn" onclick="toggleScores(${index})">
-                        <span id="expand-text-${index}">▼ Mostra Punteggi</span>
+                        <span id="expand-text-${index}">▼ Dettagli</span>
                     </button>
                 `;
                 container.appendChild(card);
@@ -947,75 +770,13 @@
 
             if (scoresDiv.style.display === 'none') {
                 scoresDiv.style.display = 'grid';
-                expandText.textContent = '▲ Nascondi Punteggi';
+                expandText.textContent = '▲ Nascondi';
             } else {
                 scoresDiv.style.display = 'none';
-                expandText.textContent = '▼ Mostra Punteggi';
+                expandText.textContent = '▼ Dettagli';
             }
         }
 
-        // Filter teams in mobile view
-        function filterTeams() {
-            const search = document.getElementById('searchTeam').value.toLowerCase();
-            const cards = document.querySelectorAll('.team-card');
-
-            cards.forEach(card => {
-                const teamName = card.dataset.teamName;
-                if (teamName.includes(search)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Switch mobile view
-        function switchMobileView(view) {
-            const tabs = document.querySelectorAll('.mobile-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-
-            if (view === 'classifica') {
-                event.target.classList.add('active');
-                document.getElementById('mobile-classifica-view').style.display = 'block';
-                document.getElementById('mobile-bar-view').style.display = 'none';
-            } else {
-                event.target.classList.add('active');
-                document.getElementById('mobile-classifica-view').style.display = 'none';
-                document.getElementById('mobile-bar-view').style.display = 'block';
-            }
-        }
-
-        // Show scores for selected bar
-        function showBarScores() {
-            const barKey = document.getElementById('barSelector').value;
-            const container = document.getElementById('barViewContainer');
-
-            if (!barKey) {
-                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">Seleziona un tempio per vedere i punteggi</div>';
-                return;
-            }
-
-            // Sort teams by score for this bar
-            const sortedTeams = [...teamsData].sort((a, b) => b.scores[barKey] - a.scores[barKey]);
-
-            const html = `
-                <div class="bar-view-header">
-                    <div class="bar-view-title">🏛️ ${BAR_NAMES[barKey]}</div>
-                    <div style="color: #666; font-size: 0.9em;">Punteggi di tutte le squadre</div>
-                </div>
-                <div class="bar-scores-list">
-                    ${sortedTeams.map((team, index) => `
-                        <div class="bar-score-item">
-                            <span class="bar-team-rank">#${index + 1}</span>
-                            <span class="bar-team-name">${team.name}</span>
-                            <span class="bar-team-score">${team.scores[barKey]}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-
-            container.innerHTML = html;
-        }
 
         // Handle score input
         function handleScoreInput(event) {
