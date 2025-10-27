@@ -10,13 +10,15 @@ This is a **vanilla JavaScript, HTML, and CSS** project with **no build process 
 
 ## Key Files
 
-- **`index.html`** - Main scoreboard/leaderboard page (Classifica Finale)
-- **`hub-capitani.html`** - Team captain management dashboard
-- **`homepage.html`** - Landing page with event information, temples, and rules
-- **`script.js`** - JavaScript for captain hub functionality
-- **`styles.css`** - Shared CSS styling across all pages
-- **`template_classifica.csv`** - CSV template for Google Sheets integration
+- **`index.html`** - Main scoreboard/leaderboard page (Classifica Finale) - This is the primary page users view
+- **`hub-capitani.html`** - Team captain management dashboard for individual team management
+- **`homepage.html`** - Landing page with event information, temples, rules, and navigation
+- **`script.js`** - JavaScript for captain hub functionality (ES6+ class-based architecture)
+- **`styles.css`** - Shared CSS styling across all pages (Greek vase aesthetic)
+- **`template_classifica.csv`** - CSV template for Google Sheets structure
+- **`classifica_aggiornata.csv`** - Updated scoreboard data export
 - **`Loghi Bar/`** - Directory containing bar logos and event branding images
+- **`README.md`** - Project documentation (note: refers to `classifica.html` but actual file is `index.html`)
 
 ## Application Architecture
 
@@ -93,10 +95,12 @@ Each temple has one challenge, and teams earn points (0-100) for completing chal
 
 The scoreboard (`index.html`) integrates with Google Sheets using **JSONP technique** to avoid CORS issues:
 
-1. User provides Google Sheet ID via prompt
-2. App creates script tag: `https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:json`
-3. Google Sheets calls `window.google.visualization.Query.setResponse()`
-4. Data is parsed and loaded into the scoreboard
+1. **Automatic loading on startup** - The app ALWAYS loads from Google Sheets silently when the page loads (no user prompt)
+2. **Hardcoded Sheet ID** - Currently set to: `1aGLJYQEfh54yUvY6VvyJtbnf8tysTcYtNobDURq34RI` (in `index.html:832`)
+3. **Manual sync via long-press** - Hold logo for 5 seconds to trigger a manual sync with visual feedback
+4. App creates script tag: `https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:json`
+5. Google Sheets calls `window.google.visualization.Query.setResponse()`
+6. Data is parsed and loaded into the scoreboard
 
 **Required Google Sheets Structure:**
 ```
@@ -104,6 +108,11 @@ SQUADRA | CALIGO | CASA GOTUZZO | CERERIA | ... | VITAE | BONUS
 ```
 
 Sheet must be publicly accessible: "Anyone with the link can view"
+
+**Important Implementation Details:**
+- Silent loading on page load (`loadFromGoogleSheets(false)`) - no popup alert
+- Long-press detection uses 5-second timeout with visual feedback (logo scales and glows)
+- Sheet data overwrites any existing LocalStorage data on load
 
 ## Development Workflow
 
@@ -119,10 +128,12 @@ python3 -m http.server 8000
 npx serve .
 
 # Then open
-http://localhost:8000/index.html         # Scoreboard
+http://localhost:8000/homepage.html      # Homepage (start here)
+http://localhost:8000/index.html         # Scoreboard/Classifica Finale
 http://localhost:8000/hub-capitani.html  # Captain Hub
-http://localhost:8000/homepage.html      # Homepage
 ```
+
+**Note**: The homepage provides navigation buttons to both the scoreboard and captain hub.
 
 ### Testing Approach
 
@@ -183,16 +194,23 @@ Scores are calculated by:
 
 ### Mobile View Modes
 
-**Classifica Finale** has two mobile tabs:
-1. **🏆 Classifica**: Searchable card view of all teams
-2. **🏛️ Per Bar**: Filter by specific bar to see all team scores for that location
+**Classifica Finale** (`index.html`) has two mobile tabs:
+1. **🏆 Classifica**: Searchable card view of all teams with expandable score details
+2. **🏛️ Per Bar**: Dropdown selector to filter by specific bar/temple and see all team scores for that location
+
+**Hub Capitani** (`hub-capitani.html`) has separate mobile and desktop versions:
+- Mobile version uses collapsible sections for team management, challenges, and notes
+- Desktop version uses a grid layout with side-by-side panels
+- Detection based on `window.innerWidth <= 768px`
 
 ### Animation and UX
 
-- Number animations using `requestAnimationFrame`
-- Status bar transitions (0.8s ease)
-- Greek vase flame animation using CSS keyframes
-- Collapsible sections with smooth transitions
+- Number animations using `requestAnimationFrame` with easing functions
+- Status bar transitions (0.8s ease) for morale, energy, and strategy meters
+- Greek vase flame animation using CSS keyframes (`@keyframes flame`)
+- Collapsible sections with smooth transitions and transform effects
+- Long-press visual feedback on logo (scale + box-shadow animation)
+- Card hover effects with transform and shadow on team cards
 
 ## Developer Console Commands
 
@@ -223,6 +241,10 @@ Esc         // Close modals
 - Check that Sheet ID (from URL) is correct
 - Ensure internet connection is active
 - Check browser console for JSONP errors
+- **To change the Google Sheets ID**: Edit `index.html` line 832 and update the `googleSheetsId` variable
+  ```javascript
+  let googleSheetsId = 'YOUR_NEW_SHEET_ID_HERE';
+  ```
 
 ### LocalStorage Data Loss
 
@@ -273,6 +295,17 @@ Esc         // Close modals
 - **No authentication** - All data is local and public
 - **Italian language** - UI text is in Italian
 - **Event-specific** - Designed for Olimpiadi Goliardiche 2025 event in Chiavari, Italy
+
+## Recent Changes (from Git History)
+
+**Latest commits show:**
+1. **Removed export/recalculate buttons** from navigation (46ca075)
+2. **Reorganized header layout** - Logo on sides, title on 2 lines, 5-second long-press for sync (fd562a3)
+3. **Improved UI and implemented long-press** on logo for synchronization (9b85a32)
+4. **Always load from Google Sheets on startup** - Silent background loading, no user prompt (8a433a3)
+5. **Hardcoded Google Sheets ID** - Sheet ID embedded in code for automatic sync (b5e1d8a)
+
+**Key behavioral change:** The app now prioritizes live Google Sheets data over LocalStorage, loading fresh data on every page load.
 
 ## Future Enhancement Considerations
 

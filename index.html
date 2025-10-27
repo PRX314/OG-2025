@@ -326,52 +326,53 @@
 
         /* Team Cards */
         .team-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
         .team-card {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             border-left: 4px solid #daa520;
             transition: all 0.3s ease;
         }
 
         .team-card:hover {
-            transform: translateX(5px);
+            transform: translateY(-3px);
             box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
         }
 
         .team-card-header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 12px;
             padding-bottom: 10px;
             border-bottom: 2px solid #f0f0f0;
         }
 
         .team-card-rank {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: bold;
             color: #daa520;
             font-family: 'Cinzel', serif;
         }
 
         .team-card-name {
-            font-size: 1.3em;
+            font-size: 1em;
             font-weight: 600;
             color: #2c3e50;
             font-family: 'Cinzel', serif;
-            flex: 1;
-            margin: 0 15px;
+            text-align: center;
+            line-height: 1.2;
         }
 
         .team-card-total {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: bold;
             color: #b8860b;
             font-family: 'JetBrains Mono', monospace;
@@ -379,24 +380,25 @@
 
         .team-card-scores {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 15px;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            margin-top: 10px;
         }
 
         .score-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px;
+            padding: 6px 8px;
             background: #f8f9fa;
-            border-radius: 6px;
-            font-size: 0.85em;
+            border-radius: 5px;
+            font-size: 0.75em;
         }
 
         .score-item-name {
             font-weight: 600;
             color: #555;
+            font-size: 0.9em;
         }
 
         .score-item-value {
@@ -407,12 +409,13 @@
 
         .expand-btn {
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 8px;
+            margin-top: 8px;
             background: #f0f0f0;
             border: none;
             border-radius: 6px;
             font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -615,19 +618,21 @@
                 font-size: 0.9em;
             }
 
-            /* Team cards */
+            /* Team cards - mantieni due colonne su mobile */
             .team-cards {
-                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
             }
 
             .team-card {
-                padding: 12px;
+                padding: 10px;
                 margin-bottom: 0;
             }
 
             .team-card-header {
-                margin-bottom: 10px;
-                padding-bottom: 8px;
+                margin-bottom: 8px;
+                padding-bottom: 6px;
+                gap: 5px;
             }
 
             .team-card-rank {
@@ -635,8 +640,7 @@
             }
 
             .team-card-name {
-                font-size: 1em;
-                margin: 0 10px;
+                font-size: 0.85em;
             }
 
             .team-card-total {
@@ -645,19 +649,23 @@
 
             .team-card-scores {
                 grid-template-columns: 1fr;
-                gap: 6px;
-                margin-top: 10px;
+                gap: 5px;
+                margin-top: 8px;
             }
 
             .score-item {
-                padding: 6px;
-                font-size: 0.8em;
+                padding: 5px 6px;
+                font-size: 0.7em;
+            }
+
+            .score-item-name {
+                font-size: 0.85em;
             }
 
             .expand-btn {
-                padding: 8px;
-                margin-top: 8px;
-                font-size: 0.85em;
+                padding: 6px;
+                margin-top: 6px;
+                font-size: 0.75em;
             }
 
             /* Bar view */
